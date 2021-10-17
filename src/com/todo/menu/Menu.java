@@ -18,6 +18,7 @@ public class Menu {
         System.out.println("ls_date_desc - 역정렬하기(시간순)");
         System.out.println("import - txt파일에서 데이터 가져오기");
         System.out.println("comp 번호 - 완료 체크하기");
+        System.out.println("comp_cancel 번호 - 완료 체크 취소하기");
         System.out.println("exit - 나가기");
         System.out.println();
     }

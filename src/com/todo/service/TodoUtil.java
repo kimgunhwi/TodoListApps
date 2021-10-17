@@ -15,7 +15,8 @@ public class TodoUtil {
 	
 	public static void createItem(TodoList l) {
 		 
-		String title, category, desc, due_date;
+		String title, category, desc, day, due_date;
+		int importance=0;
 		Scanner sc = new Scanner(System.in);
 		
 		System.out.print("\n"
@@ -35,12 +36,17 @@ public class TodoUtil {
 		
 		System.out.print("내용 > ");
 		desc = sc.nextLine();
+
+		System.out.print("마감요일 > ");
+		day = sc.nextLine();
 		
 		System.out.print("마감일자 > ");
 		due_date = sc.next().trim();
 
+		System.out.print("중요도 > ");
+		importance = sc.nextInt();
 		
-		TodoItem t = new TodoItem(title, category, desc, due_date);
+		TodoItem t = new TodoItem(title, category, desc, day, due_date, importance);
 		if(l.addItem(t)>0)
 			System.out.println("추가되었습니다.\n");
 	}
@@ -80,10 +86,18 @@ public class TodoUtil {
 		System.out.print("새로운 설명 > ");
 		String new_description = sc.nextLine();
 		
+		System.out.print("새로운 마감요일 > ");
+		String new_due_day = sc.next().trim();
+		sc.nextLine();
+		
 		System.out.print("새로운 마감일자 > ");
 		String new_due_date = sc.next().trim();
+		sc.nextLine();
 		
-		TodoItem t = new TodoItem(new_title, new_category, new_description, new_due_date);
+		System.out.print("새로운 중요도 > ");
+		int new_importance = sc.nextInt();
+		
+		TodoItem t = new TodoItem(new_title, new_category, new_description, new_due_day, new_due_date, new_importance);
 		t.setId(index);
 		if(l.updateItem(t)>0)
 			System.out.println("수정되었습니다.\n");
@@ -146,23 +160,59 @@ public class TodoUtil {
 	}
 	
 	public static void compList(TodoList l, int index) {
-		String new_title="";
-		String new_category="";
-		String new_description="";
-		String new_due_date="";
+		int importance=0, is_completed=0;
+		String title="";
+		String category="";
+		String desc="";
+		String day="";
+		String due_date="";
+		String current_date="";
 		
 		for(TodoItem item : l.getList()) {
 			if(item.getId()==index) {
-				new_title = item.getTitle();
-				new_category = item.getCategory();
-				new_description = item.getDesc();
-				new_due_date = item.getDue_date();
+				title = item.getTitle();
+				category = item.getCategory();
+				desc = item.getDesc();
+				day = item.getDay();
+				due_date = item.getDue_date();
+				current_date = item.getCurrent_date();
+				is_completed=item.getIs_completed();
+				importance=item.getImportance();
 			}
 		}
-		TodoItem t = new TodoItem(new_title, new_category, new_description, new_due_date);
-		t.setId(index);
-		t.setIs_completed(1);
+		if(title.equals("")) {System.out.println("해당하는 항목이 없습니다.\n");return;}
+		else if(is_completed==1) {System.out.println("이미 완료체크된 항목입니다.\n");return;}
+		TodoItem t = new TodoItem(index, title, category, desc, day, due_date, current_date, 1, importance);
 		if(l.updateItem(t)>0)
 			System.out.println("완료 체크하였습니다.\n");
+	}
+	
+	public static void compListCancel(TodoList l, int index) {
+		int importance=0, is_completed=1;
+		String title="";
+		String category="";
+		String desc="";
+		String day="";
+		String due_date="";
+		String current_date="";
+		
+		for(TodoItem item : l.getList()) {
+			if(item.getId()==index) {
+				title = item.getTitle();
+				category = item.getCategory();
+				desc = item.getDesc();
+				day = item.getDay();
+				due_date = item.getDue_date();
+				current_date = item.getCurrent_date();
+				is_completed=item.getIs_completed();
+				importance=item.getImportance();
+			}
+		}
+		
+		if(title.equals("")) {System.out.println("해당하는 항목이 없습니다.\n");return;}
+		else if(is_completed==0) {System.out.println("완료체크된 항목이 아닙니다.\n");return;}
+		TodoItem t = new TodoItem(index, title, category, desc, day, due_date, current_date, 0, importance);
+		if(l.updateItem(t)>0)
+			System.out.println("완료 체크를 취소하였습니다.\n");
 	}
 }

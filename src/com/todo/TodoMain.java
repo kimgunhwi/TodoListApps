@@ -58,6 +58,11 @@ public class TodoMain {
 				int index = sc.nextInt();
 				TodoUtil.compList(l, index);
 				break;
+			
+			case "comp_cancel":
+				int indexCancel = sc.nextInt();
+				TodoUtil.compListCancel(l, indexCancel);
+				break;
 
 			case "ls_name_asc":
 				System.out.println("제목순으로 정렬하였습니다.");

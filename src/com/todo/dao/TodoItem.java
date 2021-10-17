@@ -6,39 +6,62 @@ import java.text.SimpleDateFormat;
 public class TodoItem {
 	private int id;
 	private int is_completed;
+	private int importance;
     private String title;
     private String desc;
     private String current_date;
     private String category;
     private String due_date;
+    private String day;
 
-	public TodoItem(String title, String category, String desc, String due_date){
+	public TodoItem(String title, String category, String desc, String day, String due_date, int importance){
     	this.title=title;
         this.category=category;
         this.desc=desc;
+        this.day=day;
         this.due_date=due_date;
         SimpleDateFormat f = new SimpleDateFormat("yyyy/MM/dd kk:mm:ss");
         this.current_date=f.format(new Date());
         this.is_completed=0;
+        this.importance=importance;
     }
     
-    public TodoItem(String title, String category, String desc, String due_date, String current_date){
-        this.title=title;
+    public TodoItem(int id, String title, String category, String desc, String day, String due_date, String current_date, int is_completed, int importance){
+        this.id=id;
+    	this.title=title;
         this.category = category;
         this.desc=desc;
+        this.day=day;
         this.due_date=due_date;
         this.current_date=current_date;
-        this.is_completed=0;
+        this.is_completed=is_completed;
+        this.importance=importance;
     }
 	
     public String toString() {
     	if(this.is_completed==1)
-    		return (this.id + " [" + this.category + "] " + this.title + "[V] - " + this.desc + " - " + this.due_date + " - " + this.current_date);
+    		return (this.id + " [" + this.category + "] " + this.title + "[V] - " + this.desc + " - " + this.day + " - " + this.due_date + " - " + this.current_date + " - " + this.importance);
     	else
-    		return (this.id + " [" + this.category + "] " + this.title + " - " + this.desc + " - " + this.due_date + " - " + this.current_date);
+    		return (this.id + " [" + this.category + "] " + this.title + " - " + this.desc + " - " + this.day + " - " + this.due_date + " - " + this.current_date + " - " + this.importance);
     }
     
-    public int getIs_completed() {
+    public int getImportance() {
+		return importance;
+	}
+
+	public void setImportance(int importance) {
+		this.importance = importance;
+	}
+
+	public String getDay() {
+		return day;
+	}
+
+	public void setDay(String day) {
+		this.day = day;
+	}
+
+	public int getIs_completed() {
 		return is_completed;
 	}
 
